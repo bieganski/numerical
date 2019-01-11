@@ -1,9 +1,10 @@
 function []= oct ()
-  a = -5;
-  b = 5;
+  a = 0;
+  b = 1;
   
+  warning('off', 'all');
   
-  f = @(x) 1 / (1 + x^2);
+  f = @(x) sqrt(x);
   p = linspace(a,b,1000);
   yp = arrayfun (f, p);
   
@@ -12,6 +13,7 @@ function []= oct ()
   n = length(ns);
   
   figure(1);
+  
   for i = 1:n
     x = linspace(a,b,ns(i));
     y = arrayfun (f, x);
@@ -21,6 +23,8 @@ function []= oct ()
     printf("n = %d   norm = %e\n", ns(i), nor);
     subplot(2,3,i);
     plot(p, yp, 'g.', p, v, 'b' , x, y, 'o');
+    
+    title(["węzły równoodległe, n = ", num2str(ns(i)), "\n"]);
   endfor
   
   printf("############## CZEB ##############\n");
@@ -34,8 +38,9 @@ function []= oct ()
     nor = norm(yp - v, "inf");
     printf("n = %d  norm = %e\n", ns(i), nor);
     subplot(2,3,i);
+    
     plot(p, yp, 'g.', p, v, 'b' , x, y, 'o');
+    title(["węzły Czebyszewa, n = ", num2str(ns(i)), "\n"]);
   endfor
-  
   
 endfunction

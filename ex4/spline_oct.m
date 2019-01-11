@@ -1,15 +1,15 @@
 function []= spline_oct ()
-  a = 0;
-  b = 1;
+  a = -5;
+  b = 5;
   
   warning('off', 'all');
   
-  f = @(x) sqrt(x);
+  f = @(x) 1 / (1 + x^2);
   p = linspace(a,b,1000);
   yp = arrayfun (f, p);
   
   
-  ns = [5,9,17,33,65];
+  ns = [5,9,17,33,65, 200];
   n = length(ns);
   
   figure(1);
@@ -17,7 +17,6 @@ function []= spline_oct ()
   for i = 1:n
     x = linspace(a,b,ns(i));
     y = arrayfun (f, x);
-    # pf = polyfit(x, y, ns(i) - 1);
     pf = spline(x, y);
     v = ppval(pf, p);
     
@@ -35,8 +34,6 @@ function []= spline_oct ()
   for i = 1:n
     x = Czeb(a,b,ns(i));
     y = arrayfun (f, x);
-    #pf = polyfit(x, y, ns(i) - 1);
-    # v = polyval(pf, p);
     pf = spline(x, y);
     v = ppval(pf, p);
     
